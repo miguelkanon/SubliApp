@@ -1,12 +1,19 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Backend del sistema de información para la gestión comercial en SubliApp",
+  "main": "src/server.js",
   "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["SubliApp",
+    "backend",
+    "node",
+    "express",
+    "mysql"
+],
   "author": "Miguel Canon",
   "license": "ISC",
   "type": "commonjs",
