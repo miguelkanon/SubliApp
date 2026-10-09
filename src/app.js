@@ -1,14 +1,23 @@
-const express = require('express'); // Importa Express
+const express = require('express');
 
-const app = express(); // Crea la aplicación
+const userRoutes = require('./modules/users/user.routes');
+const errorHandler = require('./middlewares/error.middleware');
 
-// Permite recibir información en formato JSON
+const app = express();
+
 app.use(express.json());
+
+// Comprobación del servidor
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
-    message: 'Subliapp API is running'
-  });
+    message: 'SubliApp API is running'
+});
 });
 
-module.exports = app;  // Permite utilizar app desde otros archivos
+// Rutas de usuarios
+app.use('/api/users', userRoutes);
+
+// Middleware global de errores
+app.use(errorHandler);
+module.exports = app;
