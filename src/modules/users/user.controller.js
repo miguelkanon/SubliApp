@@ -1,4 +1,8 @@
+//El Controller es el encargado de recibir las solicitudes HTTP, procesarlas y enviar respuestas al cliente. Se comunica con el servicio para realizar operaciones relacionadas con los usuarios.
+
 const userService = require('./user.service');
+const authService = require("../auth/auth.service");
+
 async function createUser(req, res, next) {
 try {
 const user = await userService.createUser(req.body);
@@ -78,10 +82,24 @@ next(error);
 }
 }
 
+async function getMyProfile(req, res, next) {
+  try {
+    const user = await authService.getProfile(req.user.id);
+
+    return res.status(200).json({
+      data: user
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+
 module.exports = {
 createUser,
 getUsers,
 getUserById,
+getMyProfile,
 updateUser,
 changeUserStatus,
 deleteUser
