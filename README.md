@@ -1,10 +1,10 @@
 ﻿# SubliApp Backend
 
-Backend del sistema de información para la gestión comercial de SubliApp. Este proyecto expone una API REST construida con Node.js y Express para gestionar autenticación, usuarios y la lógica de negocio principal del sistema.
+Backend del sistema de información para la gestión comercial de SubliApp. Este proyecto expone una API REST construida con Node.js y Express para gestionar autenticación, usuarios y la lógica principal del sistema.
 
 ## Descripción general
 
-SubliApp es una solución orientada a la gestión comercial y operativa de una empresa. El backend funciona como la capa de servicios del sistema, conectando la aplicación con MySQL y proporcionando una estructura modular para continuar ampliando funcionalidades.
+SubliApp es una solución orientada a la gestión comercial y operativa de una empresa. El backend funciona como la capa de servicios del sistema, conectando la aplicación con MySQL y proporcionando una base modular para continuar ampliando funcionalidades del negocio.
 
 ## Funcionalidades actuales
 
@@ -16,6 +16,7 @@ SubliApp es una solución orientada a la gestión comercial y operativa de una e
 - Validación de entradas por módulo
 - Middleware centralizado de errores
 - Arquitectura modular por dominios
+- Soporte para autenticación y autorización con roles
 
 ## Tecnologías utilizadas
 
@@ -45,34 +46,34 @@ Backend/
 │   │   ├── auth.middleware.js
 │   │   ├── error.middleware.js
 │   │   └── role.middleware.js
-│   └── modules/
-│       ├── auth/
-│       │   ├── auth.controller.js
-│       │   ├── auth.repository.js
-│       │   ├── auth.routes.js
-│       │   ├── auth.service.js
-│       │   └── auth.validator.js
-│       └── users/
-│           ├── user.controller.js
-│           ├── user.repository.js
-│           ├── user.routes.js
-│           ├── user.service.js
-│           └── user.validator.js
+│   ├── modules/
+│   │   ├── auth/
+│   │   │   ├── auth.controller.js
+│   │   │   ├── auth.routes.js
+│   │   │   ├── auth.service.js
+│   │   │   └── auth.validator.js
+│   │   └── users/
+│   │       ├── user.controller.js
+│   │       ├── user.routes.js
+│   │       ├── user.service.js
+│   │       └── user.validator.js
+│   └── utils/
 └── node_modules/
 ```
 
 ## Requisitos previos
 
-Antes de ejecutar el proyecto asegúrate de tener:
+Antes de ejecutar el proyecto, asegúrate de tener instalado:
 
 - Node.js 18 o superior
 - npm
 - MySQL
-- Un cliente para administrar la base de datos (opcional)
+- Una base de datos creada para el proyecto
+- Un cliente para administración de MySQL (opcional)
 
 ## Instalación
 
-1. Clona el repositorio y entra a la carpeta del backend:
+1. Abre la terminal y entra a la carpeta del backend:
 
 ```bash
 cd Backend
@@ -90,9 +91,7 @@ npm install
 copy .env.example .env
 ```
 
-4. Configura tus variables de entorno en `.env`.
-
-Ejemplo:
+4. Configura tus variables de entorno en `.env`:
 
 ```env
 PORT=3000
@@ -142,7 +141,7 @@ http://localhost:3000
 
 ### Verificación de salud
 
-- GET `/api/health`
+- `GET /api/health`
 
 Respuesta esperada:
 
@@ -155,7 +154,7 @@ Respuesta esperada:
 
 ### Autenticación
 
-- POST `/api/auth/login`
+- `POST /api/auth/login`
 
 Ejemplo de cuerpo:
 
@@ -187,18 +186,18 @@ Respuesta esperada:
 
 Todas las rutas bajo `/api/users` requieren autenticación mediante un token JWT válido.
 
-- POST `/api/users` — Crear usuario
-- GET `/api/users` — Listar usuarios
-- GET `/api/users/me` — Consultar perfil del usuario autenticado
-- GET `/api/users/:id` — Consultar usuario por ID
-- PUT `/api/users/:id` — Actualizar usuario
-- PATCH `/api/users/:id/status` — Cambiar estado del usuario
-- DELETE `/api/users/:id` — Eliminación lógica del usuario
+- `POST /api/users` — Crear usuario
+- `GET /api/users` — Listar usuarios
+- `GET /api/users/me` — Consultar perfil del usuario autenticado
+- `GET /api/users/:id` — Consultar usuario por ID
+- `PUT /api/users/:id` — Actualizar usuario
+- `PATCH /api/users/:id/status` — Cambiar estado del usuario
+- `DELETE /api/users/:id` — Eliminación lógica del usuario
 
 Ejemplo de uso con token:
 
 ```http
-Authorization: Bearer <tu_token>
+Authorization: Bearer <jwt_token>
 ```
 
 ### Ejemplo de creación de usuario
@@ -212,6 +211,15 @@ Authorization: Bearer <tu_token>
 }
 ```
 
+## Roles y permisos
+
+El backend usa middleware para controlar acceso por roles:
+
+- `1` — Administrador
+- `2` — Usuario general
+
+Algunas rutas están restringidas según el rol del usuario autenticado. La validación se aplica con middleware de autenticación y autorización.
+
 ## Seguridad
 
 El proyecto usa:
@@ -220,10 +228,11 @@ El proyecto usa:
 - Validación de entradas en cada módulo
 - Middleware de autenticación y autorización
 - Control de errores centralizado por `error.middleware.js`
+- Encriptación de contraseñas con `bcrypt`
 
 ## Estado del proyecto
 
-El backend se encuentra en una etapa inicial pero con una base funcional para continuar desarrollando:
+El backend se encuentra en etapa inicial, pero con una base funcional para continuar desarrollando:
 
 - autenticación de usuarios
 - gestión de roles y permisos
