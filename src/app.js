@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const userRoutes = require('./modules/users/user.routes');
 const errorHandler = require('./middlewares/error.middleware');
@@ -6,6 +7,8 @@ const authRoutes = require("./modules/auth/auth.routes");
 
 const app = express();
 
+// Configuración de CORS y middleware para parsear JSON
+app.use(cors());
 app.use(express.json());
 
 // Comprobación del servidor
