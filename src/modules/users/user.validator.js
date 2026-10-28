@@ -26,10 +26,11 @@ message: 'Password must contain at least 8 characters'
 });
 }
 // Rol
-if (!Number.isInteger(id_rol) || id_rol <= 0) {
-return res.status(400).json({
-message: 'Role ID must be a positive integer'
-});
+const rolParsed = Number(id_rol);
+if (!Number.isInteger(rolParsed) || rolParsed <= 0) {
+  return res.status(400).json({
+    message: 'Role ID must be a positive integer'
+  });
 }
 next();
 }
@@ -65,10 +66,11 @@ return res.status(400).json({
 message: 'Invalid email format'
 });
 }
-if (!Number.isInteger(id_rol) || id_rol <= 0) {
-return res.status(400).json({
-message: 'Invalid role ID'
-});
+const rolParsed = Number(id_rol);
+if (!Number.isInteger(rolParsed) || rolParsed <= 0) {
+  return res.status(400).json({
+    message: 'Invalid role ID'
+  });
 }
 next();
 }
