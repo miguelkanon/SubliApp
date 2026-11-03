@@ -94,6 +94,27 @@ async function getMyProfile(req, res, next) {
   }
 }
 
+// Actualizar contraseña
+async function updatePassword(req, res, next) {
+  try {
+    const { contrasena } = req.body;
+    
+    // Validación rápida de la nueva contraseña
+    if (typeof contrasena !== 'string' || contrasena.length < 8) {
+      return res.status(400).json({
+        message: 'Password must contain at least 8 characters'
+      });
+    }
+
+    await userService.updatePassword(req.params.id, contrasena);
+    
+    return res.status(200).json({
+      message: 'Password updated successfully'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 module.exports = {
 createUser,
@@ -102,5 +123,6 @@ getUserById,
 getMyProfile,
 updateUser,
 changeUserStatus,
-deleteUser
+deleteUser,
+updatePassword
 };

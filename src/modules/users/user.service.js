@@ -100,10 +100,25 @@ throw error;
 await userRepository.softDelete(id);
 }
 
+// Actualizar contraseña
+async function updatePassword(id, newPassword) {
+  const user = await userRepository.findById(id);
+  if (!user) {
+    const error = new Error('User not found');
+    error.status = 404;
+    throw error;
+  }
+  
+  // Proteger la nueva contraseña
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await userRepository.updatePassword(id, hashedPassword);
+}
+
 //Actualizar la exportación:
 module.exports = {
 createUser,
 getUsers,
+updatePassword,
 getUserById,
 updateUser,
 changeUserStatus,

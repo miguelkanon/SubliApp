@@ -101,6 +101,18 @@ AND deleted_at IS NULL`,
 return result.affectedRows;
 }
 
+// Actualizar contraseña
+async function updatePassword(id, hashedPassword) {
+  const [result] = await pool.execute(
+    `UPDATE usuario
+     SET contrasena = ?
+     WHERE id_usuario = ?
+     AND deleted_at IS NULL`,
+    [hashedPassword, id]
+  );
+  return result.affectedRows;
+}
+
 //Exportar funciones
 module.exports = {
 findByEmail,
@@ -110,5 +122,6 @@ findAll,
 findById,
 update,
 updateStatus,
-softDelete
+softDelete,
+updatePassword
 };

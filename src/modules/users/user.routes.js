@@ -34,6 +34,8 @@ router.get('/:id',validateUserId,authorizeRoles(1),userController.getUserById);
 // Actualizar usuario
 router.put('/:id',validateUserId,authorizeRoles(1),validateUpdateUser,userController.updateUser);
 
+// Actualizar contraseña
+router.patch('/:id/password', validateUserId, authorizeRoles(1), userController.updatePassword);
 
 // Cambiar estado
 router.patch('/:id/status',validateUserId,authorizeRoles(1),validateStatus,userController.changeUserStatus);
