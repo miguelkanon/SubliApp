@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRoutes = require('./modules/users/user.routes');
 const errorHandler = require('./middlewares/error.middleware');
 const authRoutes = require("./modules/auth/auth.routes");
+const clienteRoutes = require('./modules/clientes/cliente.routes'); 
 
 const app = express();
 
@@ -21,6 +22,9 @@ app.get('/api/health', (req, res) => {
 
 // Rutas de usuarios
 app.use('/api/users', userRoutes);// Usar las rutas de usuarios para cualquier solicitud que comience con /api/users
+
+// Rutas de clientes
+app.use('/api/clientes', clienteRoutes);
 
 // Rutas de autenticación
 app.use("/api/auth", authRoutes);
