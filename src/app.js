@@ -7,6 +7,7 @@ const authRoutes = require("./modules/auth/auth.routes");
 const clienteRoutes = require('./modules/clientes/cliente.routes');
 const productoRoutes = require('./modules/productos/producto.routes');
 const cotizacionRoutes = require('./modules/cotizaciones/cotizacion.routes'); 
+const pedidoRoutes = require('./modules/pedidos/pedido.routes');
 
 const app = express();
 
@@ -33,6 +34,9 @@ app.use('/api/productos', productoRoutes);
 
 // Rutas de cotizacioness
 app.use('/api/cotizaciones', cotizacionRoutes);
+
+// Rutas de pedidos
+app.use('/api/pedidos', pedidoRoutes);
 
 // Rutas de autenticación
 app.use("/api/auth", authRoutes);
