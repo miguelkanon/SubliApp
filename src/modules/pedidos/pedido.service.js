@@ -29,7 +29,7 @@ async function createPedido(data) {
   const nuevoPedido = {
     id_cotizacion,
     id_cliente: cotizacion.id_cliente, 
-    id_usuario: id_usuario || 1,
+    id_usuario,
     fecha_entrega_estimada,
     monto_total: total, 
     monto_pagado: abono,

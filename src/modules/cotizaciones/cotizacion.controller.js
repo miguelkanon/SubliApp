@@ -3,16 +3,19 @@ const cotizacionService = require('./cotizacion.service');
 // 1. Crear cotización
 async function create(req, res, next) {
   try {
+    // Capturamos el ID del usuario logueado desde el token JWT.
+    // Nota: Verifica si tu middleware lo guarda como req.user o req.usuario
+    req.body.id_usuario = req.user.id_usuario; 
+
     const newCotizacionId = await cotizacionService.createCotizacion(req.body);
     return res.status(201).json({
       message: 'Cotización creada exitosamente',
       id_cotizacion: newCotizacionId
     });
   } catch (error) {
-    next(error); // Pasa el error al middleware global de manejo de errores
+    next(error);
   }
 }
-
 // 2. Obtener todas las cotizaciones
 async function getAll(req, res, next) {
   try {

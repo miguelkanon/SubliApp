@@ -3,13 +3,16 @@ const pedidoService = require('./pedido.service');
 // 1. Crear un pedido (desde una cotización)
 async function create(req, res, next) {
   try {
+    // Inyectamos el ID del usuario logueado
+    req.body.id_usuario = req.user.id_usuario;
+
     const newPedidoId = await pedidoService.createPedido(req.body);
     return res.status(201).json({
       message: 'Pedido creado exitosamente',
       id_pedido: newPedidoId
     });
   } catch (error) {
-    next(error); // Pasamos el error al manejador global
+    next(error);
   }
 }
 
