@@ -44,7 +44,7 @@ async function findById(id) {
 
 // 5. Actualizar producto
 async function update(id, producto) {
-  const { nombre, descripcion, precio_base, stock, categoria } = producto;
+  const { nombre, descripcion = null, precio_base, stock, categoria } = producto;
   const [result] = await pool.execute(
     `UPDATE productos 
      SET nombre = ?, descripcion = ?, precio_base = ?, stock = ?, categoria = ?
@@ -65,11 +65,23 @@ async function softDelete(id) {
   return result.affectedRows;
 }
 
+// 7. Restaurar producto eliminado (Deshacer Soft Delete)
+async function restore(id) {
+  const [result] = await pool.execute(
+    `UPDATE productos 
+     SET deleted_at = NULL 
+     WHERE id_producto = ?`,
+    [id]
+  );
+  return result.affectedRows;
+}
+
 module.exports = {
   create,
   findByName,
   findAll,
   findById,
   update,
-  softDelete
+  softDelete,
+  restore
 };

@@ -4,7 +4,7 @@ const pedidoService = require('./pedido.service');
 async function create(req, res, next) {
   try {
     // Inyectamos el ID del usuario logueado
-    req.body.id_usuario = req.user.id_usuario;
+    req.body.id_usuario = req.user.id;
 
     const newPedidoId = await pedidoService.createPedido(req.body);
     return res.status(201).json({

@@ -18,18 +18,14 @@ router.use(authenticate);
 // Crear usuario
 router.post('/',authorizeRoles(1),validateCreateUser,userController.createUser);
 
-
 // Listar usuarios
 router.get('/',authorizeRoles(1,2),userController.getUsers);
-
 
 // Consultar perfil del usuario autenticado
 router.get("/me",userController.getMyProfile);
 
-
 // Consultar usuario
 router.get('/:id',validateUserId,authorizeRoles(1),userController.getUserById);
-
 
 // Actualizar usuario
 router.put('/:id',validateUserId,authorizeRoles(1),validateUpdateUser,userController.updateUser);
@@ -40,10 +36,8 @@ router.patch('/:id/password', validateUserId, authorizeRoles(1), userController.
 // Cambiar estado
 router.patch('/:id/status',validateUserId,authorizeRoles(1),validateStatus,userController.changeUserStatus);
 
-
 // Eliminación lógica
 router.delete('/:id',validateUserId,authorizeRoles(1),userController.deleteUser);
-
 
 
 module.exports = router;

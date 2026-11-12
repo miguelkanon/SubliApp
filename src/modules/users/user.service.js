@@ -1,8 +1,11 @@
 
 const bcrypt = require('bcrypt');
 const userRepository = require('./user.repository');
+
+// Crear usuario
 async function createUser(userData) {
-const { nombre, correo, contrasena, id_rol } = userData;
+const { nombre, apellido, correo, contrasena, id_rol } = userData;
+
 // El correo debe ser único
 const existingUser = await userRepository.findByEmail(correo);
 if (existingUser) {
@@ -21,6 +24,7 @@ throw error;
 const hashedPassword = await bcrypt.hash(contrasena, 10);
 const newUser = {
 nombre,
+apellido,
 correo,
 contrasena: hashedPassword,
 id_rol

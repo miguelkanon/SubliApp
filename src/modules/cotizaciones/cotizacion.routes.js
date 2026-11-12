@@ -6,18 +6,18 @@ const {
   validateCotizacionId, 
   validateUpdateEstado 
 } = require('./cotizacion.validator');
-const { verificarToken } = require('../../middlewares/auth.middleware');
+const authenticate = require('../../middlewares/auth.middleware');
 
 // Crear una nueva cotización (Maestro-Detalle)
-router.post('/', verificarToken, validateCreateCotizacion, cotizacionController.create);
+router.post('/', authenticate, validateCreateCotizacion, cotizacionController.create);
 
 // Obtener todas las cotizaciones
-router.get('/', verificarToken, cotizacionController.getAll);
+router.get('/', authenticate, cotizacionController.getAll);
 
 // Obtener una cotización específica por ID (incluye el detalle de productos)
-router.get('/:id', verificarToken, validateCotizacionId, cotizacionController.getById);
+router.get('/:id', authenticate, validateCotizacionId, cotizacionController.getById);
 
 // Actualizar únicamente el estado de la cotización
-router.patch('/:id/estado', verificarToken, validateCotizacionId, validateUpdateEstado, cotizacionController.updateStatus);
+router.patch('/:id/estado', authenticate, validateCotizacionId, validateUpdateEstado, cotizacionController.updateStatus);
 
 module.exports = router;

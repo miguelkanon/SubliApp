@@ -57,10 +57,23 @@ async function remove(req, res, next) {
   }
 }
 
+// 6. Restaurar producto
+async function restore(req, res, next) {
+  try {
+    await productoService.restoreProducto(req.params.id);
+    return res.status(200).json({
+      message: 'Producto restaurado exitosamente'
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
-  remove
+  remove,
+  restore
 };

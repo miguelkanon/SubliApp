@@ -41,6 +41,12 @@ app.use('/api/pedidos', pedidoRoutes);
 // Rutas de autenticación
 app.use("/api/auth", authRoutes);
 
+// Ruta para manejar solicitudes a rutas no definidas
+app.use((req, res, next) => {
+  res.status(404).json({
+    message: "La ruta solicitada no existe en SubliApp API"
+  });
+});
 
 // Debe quedar despúes de las rutas, para que pueda capturar cualquier error que ocurra en ellas
 // Middleware global de errores

@@ -18,12 +18,12 @@ return rows[0];
 }
 // Crear usuario
 async function create(user) {
-const { nombre, correo, contrasena, id_rol } = user;
+const { nombre, apellido, correo, contrasena, id_rol } = user;
 const [result] = await pool.execute(
 `INSERT INTO usuario
-(nombre, correo, contrasena, id_rol_fk)
-VALUES (?, ?, ?, ?)`,
-[nombre, correo, contrasena, id_rol]
+(nombre, apellido, correo, contrasena, id_rol_fk)
+VALUES (?, ?, ?, ?, ?)`,
+[nombre, apellido, correo, contrasena, id_rol]
 );
 return result.insertId;
 }

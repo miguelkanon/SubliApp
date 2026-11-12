@@ -5,7 +5,7 @@ async function create(req, res, next) {
   try {
     // Capturamos el ID del usuario logueado desde el token JWT.
     // Nota: Verifica si tu middleware lo guarda como req.user o req.usuario
-    req.body.id_usuario = req.user.id_usuario; 
+    req.body.id_usuario = req.user.id; 
 
     const newCotizacionId = await cotizacionService.createCotizacion(req.body);
     return res.status(201).json({

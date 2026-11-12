@@ -37,6 +37,6 @@ async function authenticate(req, res, next) {
       message: "Invalid or expired token"
     });
   }
-}
+} 
 
 module.exports = authenticate;

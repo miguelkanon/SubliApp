@@ -47,7 +47,7 @@ async function createCotizacion(data) {
   // 3. Empaquetar los datos del Maestro
   const nuevaCotizacion = {
     id_cliente,
-    id_usuario: id_usuario, // Por ahora forzamos 1 (hasta que tengamos login con JWT)
+    id_usuario: id_usuario,
     monto_total,
     validez_dias
   };

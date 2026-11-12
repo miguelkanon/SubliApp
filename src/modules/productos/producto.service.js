@@ -46,10 +46,21 @@ async function deleteProducto(id) {
   await productoRepository.softDelete(id);
 }
 
+async function restoreProducto(id) {
+  const affectedRows = await productoRepository.restore(id);
+  
+  if (affectedRows === 0) {
+    const error = new Error('Producto no encontrado o ya se encuentra activo');
+    error.status = 404;
+    throw error;
+  }
+}
+
 module.exports = {
   createProducto,
   getAllProductos,
   getProductoById,
   updateProducto,
-  deleteProducto
+  deleteProducto,
+  restoreProducto
 };
